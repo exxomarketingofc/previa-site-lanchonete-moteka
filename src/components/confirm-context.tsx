@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const ConfirmContext = createContext({ visivel: true });
@@ -36,9 +36,4 @@ export function Confirmar({
       {children}
     </Tag>
   );
-}
-
-export function useMarcacoesToggle() {
-  const [visivel, setVisivel] = useState(true);
-  return { visivel, toggle: () => setVisivel((v) => !v) };
 }

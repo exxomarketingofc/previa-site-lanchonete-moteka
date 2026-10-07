@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { cardapio } from "@/data/cardapio";
 import { usePrecos } from "@/lib/use-precos";
-import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const CHAVE_SESSAO = "moteka_admin_senha";
+
+async function verificarSenha(senha: string): Promise<boolean> {
+  const r = await fetch("/api/login.php", {
+    method: "POST",
+    body: JSON.stringify({ senha }),
+  });
+  const data = await r.json().catch(() => ({ ok: false }));
+  return Boolean(data.ok);
+}
 
 export function AdminPage() {
   const [senha, setSenha] = useState("");
@@ -19,8 +27,8 @@ export function AdminPage() {
       setVerificando(false);
       return;
     }
-    supabase.rpc("moteka_verificar_senha", { p_senha: salva }).then(({ data }) => {
-      if (data) {
+    verificarSenha(salva).then((ok) => {
+      if (ok) {
         setSenha(salva);
         setAutenticado(true);
       } else {
@@ -33,8 +41,8 @@ export function AdminPage() {
   async function entrar(e: React.FormEvent) {
     e.preventDefault();
     setErro("");
-    const { data } = await supabase.rpc("moteka_verificar_senha", { p_senha: senha });
-    if (data) {
+    const ok = await verificarSenha(senha);
+    if (ok) {
       sessionStorage.setItem(CHAVE_SESSAO, senha);
       setAutenticado(true);
     } else {
@@ -93,12 +101,12 @@ function EditorDePrecos({ senha, onSair }: { senha: string; onSair: () => void }
     const valor = Number(precos[itemId]?.replace(",", "."));
     if (!valor || valor <= 0) return;
     setStatus((s) => ({ ...s, [itemId]: "salvando" }));
-    const { error } = await supabase.rpc("moteka_atualizar_preco", {
-      p_item_id: itemId,
-      p_preco: valor,
-      p_senha: senha,
+    const r = await fetch("/api/atualizar-preco.php", {
+      method: "POST",
+      body: JSON.stringify({ item_id: itemId, preco: valor, senha }),
     });
-    setStatus((s) => ({ ...s, [itemId]: error ? "erro" : "salvo" }));
+    const data = await r.json().catch(() => ({ ok: false }));
+    setStatus((s) => ({ ...s, [itemId]: data.ok ? "salvo" : "erro" }));
   }
 
   return (

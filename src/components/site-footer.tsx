@@ -1,4 +1,3 @@
-import { Confirmar } from "@/components/confirm-context";
 import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/brand-icons";
 import { WHATSAPP_DISPLAY, waLink } from "@/lib/whatsapp";
 
@@ -25,9 +24,7 @@ export function SiteFooter() {
               {WHATSAPP_DISPLAY}
             </a>
           </p>
-          <Confirmar as="p" className="inline-block px-2 py-0.5 text-amber-900">
-            CNPJ: 00.000.000/0001-00
-          </Confirmar>
+          <p className="mb-2">CNPJ: 59.541.754/0001-00</p>
         </div>
 
         <div>

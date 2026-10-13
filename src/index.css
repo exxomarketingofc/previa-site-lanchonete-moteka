@@ -5,15 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: "Aired";
-  font-display: swap;
-  src:
-    url("/fonts/LongHairedFreakyPeople.woff2") format("woff2"),
-    url("/fonts/LongHairedFreakyPeople.woff") format("woff");
-}
-@font-face {
   font-family: "Antonio";
-  font-weight: 700;
+  font-weight: 100 700;
   font-display: swap;
   src: url("/fonts/antonio-gnmew3nwsyq_9wd3yhqifq.woff2") format("woff2");
 }
@@ -44,7 +37,7 @@
   --vermelho-esc: #7a0e06;
   --vermelho-noite: #4a0905;
   --creme: #fff6ea;
-  --whatsapp: #128c4a;
+  --whatsapp: #107d42;
 
   --background: var(--creme);
   --foreground: #221410;
@@ -126,7 +119,7 @@
   --color-creme: var(--creme);
   --color-whatsapp: var(--whatsapp);
 
-  --font-display: "Aired", "Antonio", sans-serif;
+  --font-display: "Antonio", sans-serif;
   --font-sans: "Poppins", sans-serif;
   --font-heading: var(--font-display);
 }
